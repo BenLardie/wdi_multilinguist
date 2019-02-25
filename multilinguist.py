@@ -1,8 +1,9 @@
 import requests
 import json
+import random
 
 class Multilinguist:
-  """This class represents a world traveller who knows 
+  """This class represents a world traveller who knows
   what languages are spoken in each country around the world
   and can cobble together a sentence in most of them
   (but not very well)
@@ -15,7 +16,7 @@ class Multilinguist:
 
   def __init__(self):
     """Initializes the multilinguist's current_lang to 'en'
-    
+
     Returns
     -------
     Multilinguist
@@ -34,7 +35,7 @@ class Multilinguist:
 
     Returns
     -------
-    bool 
+    bool
         2 letter iso639_1 language code.
     """
     params = {'fullText': 'true'}
@@ -78,3 +79,38 @@ class Multilinguist:
     json_response = json.loads(response.text)
     return json_response['translationText']
 
+class MathGenius(Multilinguist):
+    """ a class about a math genius but he is also a world traveller"""
+
+    def report_total(self, num=[]):
+        num = sum(num)
+        return "{} : {}".format(self.say_in_local_language('The total is'),num)
+
+
+class QouteCollector(Multilinguist):
+    """ a class for a lover of words and travel"""
+
+    qoutes = [
+    "Don't count the days, make the days count, Muhammad Ali",
+    "'My fake plants died because I did not pretend to water them.'Mitch Hedberg'",
+    "I'm retired. I was tired yesterday and I'm tired again today."
+    ]
+
+    def collector(self, qoute):
+        self.qoutes.append(qoute)
+
+    def generator(self):
+        return self.say_in_local_language(random.choice(self.qoutes))
+
+
+traveller_one = Multilinguist()
+traveller_one.language_in('germany')
+traveller_one.travel_to('Italy')
+print(traveller_one.say_in_local_language("i love tacos"))
+math_guy = MathGenius()
+math_guy.travel_to('Italy')
+print(math_guy.report_total([23,45,676,34,5778,4,23,5465]))
+neil = QouteCollector()
+neil.travel_to("Germany")
+neil.collector("I love tacos")
+print(neil.generator())
